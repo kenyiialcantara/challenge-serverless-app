@@ -1,0 +1,18 @@
+openapi: 3.0.0
+components:
+  schemas:
+    CustomPersonModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the custom person
+        name:
+          type: string
+          description: Name of the custom person
+  securitySchemes: {}
+info:
+  title: ''
+  description: ''
+  version: 0b0ad4fa-3b3a-4cee-835f-ca9d05e35416
+paths: {}

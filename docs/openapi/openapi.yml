@@ -1,0 +1,36 @@
+openapi: 3.0.0
+components:
+  schemas: {}
+  securitySchemes: {}
+info:
+  title: Challenge
+  description: Technical-Challenge.
+  version: 1.0.0
+paths:
+  /api/swapi-people:
+    get:
+      operationId: api
+      summary: Obtiene una lista de personas de SWAPI.
+      description: Este endpoint permite obtener datos de personas desde la API de SWAPI.
+      responses: {}
+  /api/custom-people:
+    post:
+      operationId: api
+      summary: Crea una nueva persona personalizada.
+      description: >-
+        Este endpoint permite crear una nueva entrada de persona en la base de
+        datos.
+      responses: {}
+    get:
+      operationId: api
+      summary: Get custom people
+      description: Fetches custom people data with optional pagination
+      responses: {}
+  "/api/custom-people/{peopleId}":
+    get:
+      operationId: api
+      summary: Obtiene una persona personalizada por ID.
+      description: >-
+        Este endpoint permite obtener datos de una persona específica usando su
+        ID.
+      responses: {}

@@ -1,0 +1,88 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: inmergion
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: technical-challenge-app
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: technical-challenge
+
+stages:
+  default:
+    params:
+      tableName: "custom-people-table-${sls:stage}"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [UsersTable, Arn]
+  environment:
+    USERS_TABLE: ${param:tableName}
+
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - httpApi:
+          path: /api/swapi-people
+          method: get
+
+      - httpApi:
+          path: /api/custom-people
+          method: post
+
+      - httpApi:
+          path: /api/custom-people/{peopleId}
+          method: get
+
+      - httpApi:
+          path: /api/custom-people
+          method: get
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: peopleId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: peopleId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${param:tableName}
+
+    OpenApiBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: "technical-challenge-documentation"
+
+plugins:
+  - serverless-openapi-documentation
+  - serverless-s3-sync
+
+custom:
+  documentation:
+    documentation:
+    api:
+      info:
+        title: Your API Title
+        version: "1.0.0"
+        description: "API documentation for your service"
+
+  openapiBucket: "technical-challenge-documentation"
+  s3Sync:
+    - bucketName: ${self:custom.openapiBucket}
+      localDir: docs/openapi
+      contentType: application/x-yaml

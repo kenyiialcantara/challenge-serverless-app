@@ -1,0 +1,23 @@
+{
+  "name": "technical-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.585.0",
+    "@aws-sdk/lib-dynamodb": "^3.585.0",
+    "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "serverless-http": "^3.2.0",
+    "serverless-s3-sync": "^3.3.0",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^10.0.0",
+    "yaml": "^2.5.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/uuid": "^10.0.0",
+    "serverless-openapi-documentation": "^0.4.0"
+  }
+}
